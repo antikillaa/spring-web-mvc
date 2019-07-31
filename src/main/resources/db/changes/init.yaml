@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: auth.1
+      author: AH
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            schemaName: shop
+            tableName: customer
+      changes:
+        - sql:
+            sql: create schema IF NOT EXISTS shop
+            dbms: postgresql
+        - createTable:
+            tableName: customer
+            schemaName: shop
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(320)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: char(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: enabled
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
