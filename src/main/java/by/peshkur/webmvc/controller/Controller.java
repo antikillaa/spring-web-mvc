@@ -28,13 +28,13 @@ public class Controller {
 
     private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
 
-/*    @GetMapping("/")
+    @GetMapping("/")
     public String main(Model model) {
         model.addAttribute("message", message);
         model.addAttribute("tasks", tasks);
 
         return "welcome"; //view
-    }*/
+    }
 
     // /hello?name=kotlin
     @GetMapping("/hello")
@@ -47,17 +47,6 @@ public class Controller {
         return "welcome"; //view
     }
 
-    @GetMapping("/")
-    public String listCustomers() {
-
-        return "redirect:list";
-    }
-
-    @GetMapping("/list")
-    public String list() {
-
-        return "redirect:list";
-    }
 
 
 
