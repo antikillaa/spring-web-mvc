@@ -1,9 +1,10 @@
 package by.peshkur.webmvc.controller;
 
+import by.peshkur.webmvc.entity.Customer;
+import by.peshkur.webmvc.service.CustomerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
@@ -18,19 +19,22 @@ import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class Controller {
+    CustomerService customerService;
+
+
     // inject via application.properties
     @Value("${welcome.message}")
     private String message;
 
     private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
 
-    @GetMapping("/")
+/*    @GetMapping("/")
     public String main(Model model) {
         model.addAttribute("message", message);
         model.addAttribute("tasks", tasks);
 
         return "welcome"; //view
-    }
+    }*/
 
     // /hello?name=kotlin
     @GetMapping("/hello")
@@ -42,6 +46,20 @@ public class Controller {
 
         return "welcome"; //view
     }
+
+    @GetMapping("/")
+    public String listCustomers() {
+
+        return "redirect:list";
+    }
+
+    @GetMapping("/list")
+    public String list() {
+
+        return "redirect:list";
+    }
+
+
 
     @GetMapping("/TestDbServlet")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

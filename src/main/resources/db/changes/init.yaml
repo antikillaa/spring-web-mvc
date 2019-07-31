@@ -24,17 +24,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: first_name
-                  type: varchar(320)
+                  type: varchar(45)
                   constraints:
                     nullable: false
               - column:
-                  name: password
-                  type: char(60)
-                  constraints:
-                    nullable: false
+                  name: last_name
+                  type: varchar(45)
               - column:
-                  name: enabled
-                  type: boolean
-                  defaultValueBoolean: true
-                  constraints:
-                    nullable: false
+                  name: email
+                  type: varchar(45)
