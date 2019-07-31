@@ -1,11 +1,12 @@
 package by.peshkur.webmvc.controller;
 
 import by.peshkur.webmvc.entity.Customer;
+import by.peshkur.webmvc.response.ApiResponse;
 import by.peshkur.webmvc.service.CustomerService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,11 @@ import java.util.List;
 
 @org.springframework.stereotype.Controller
 public class Controller {
-    CustomerService customerService;
+    private final CustomerService customerService;
+
+    Controller(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
 
     // inject via application.properties
@@ -47,7 +52,13 @@ public class Controller {
         return "welcome"; //view
     }
 
+    @PostMapping("/create")
+    public ApiResponse draftUser(@RequestBody Customer customer) {
 
+        customerService.create(customer);
+
+        return new ApiResponse(ApiResponse.SUCCESS);
+    }
 
 
     @GetMapping("/TestDbServlet")
