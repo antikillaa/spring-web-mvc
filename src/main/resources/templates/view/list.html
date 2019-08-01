@@ -34,6 +34,7 @@
 
         <table>
             <tr>
+                <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
@@ -50,19 +51,19 @@
 
                 <!-- construct an "delete" link with customer id -->
                 <url var="deleteLink" value="/customer/delete">
-                    <param name="customerId" value="${customer.id}" />
+                    <param th:name="${customer.getId()}" />
                 </url>
 
+                    <td th:text="${customer.getId()}"> </td>
                     <td th:text="${customer.getFirstName()}"> </td>
                     <td th:text="${customer.getLastName()}"> </td>
                     <td th:text="${customer.getEmail()}"> </td>
 
                     <td>
-                        <!-- display the update link -->
                         <a href="${updateLink}">Update</a>
                         |
-                        <a href="${deleteLink}"
-                           onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false">Delete</a>
+                        <a th:href="@{/delete(id=${customer.getId()})}" 
+                        onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false"> Delete</a>
                     </td>
 
 

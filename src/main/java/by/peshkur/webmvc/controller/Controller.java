@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -61,11 +62,28 @@ public class Controller {
     @GetMapping("/list")
     public String draftUser(Model model) {
         List<Customer> customers = customerService.getCustomers();
-
-            model.addAttribute("customers", customers);
-
-
+        model.addAttribute("customers", customers);
         return "view/list";
+    }
+
+    @GetMapping("/showFormForAdd")
+    public String greetingForm(Model model) {
+        model.addAttribute("customer", new Customer());
+        return "view/showFormForAdd";
+    }
+
+    @PostMapping("/showFormForAdd")
+    public String greetingSubmit(@ModelAttribute Customer customer) {
+        customerService.create(customer);
+        return "redirect:list";
+    }
+
+    @GetMapping("/delete")
+    public String delete(
+            @RequestParam(name = "id")
+                    String id) {
+        customerService.delete(UUID.fromString(id));
+        return "redirect:list"; //view
     }
 
 

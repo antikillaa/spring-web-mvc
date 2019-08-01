@@ -21,6 +21,9 @@ public class Customer {
     @Column(name="email")
     private String email;
 
+    public Customer(String firstName, String lastName, String email) {
+    }
+
     public Customer() {
     }
 
