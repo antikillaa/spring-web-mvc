@@ -1,6 +1,7 @@
 package by.peshkur.webmvc.controller;
 
 import by.peshkur.webmvc.entity.Customer;
+import by.peshkur.webmvc.repository.CustomerRepository;
 import by.peshkur.webmvc.response.ApiResponse;
 import by.peshkur.webmvc.service.CustomerService;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,14 +17,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @org.springframework.stereotype.Controller
 public class Controller {
     private final CustomerService customerService;
+    private CustomerRepository customerRepository;
+
 
     Controller(CustomerService customerService) {
         this.customerService = customerService;
+        this.customerRepository = customerRepository;
     }
 
     // inject via application.properties
@@ -84,6 +89,28 @@ public class Controller {
                     String id) {
         customerService.delete(UUID.fromString(id));
         return "redirect:list"; //view
+    }
+
+    @GetMapping("/showFormForAdd/update")
+    public String updateGet(
+            @RequestParam(name = "id")
+                    String id, Model model) {
+        Optional<Customer> customers = customerRepository.findById(UUID.fromString(id));
+        Customer customer = customers.get();
+        model.addAttribute("firstName", customer.getFirstName());
+        model.addAttribute("lastName", customer.getLastName());
+        model.addAttribute("email", customer.getEmail());
+
+        return "redirect:view/showFormForAdd"; //view
+    }
+
+    @PostMapping("/update")
+    public String updatePost(
+            @ModelAttribute Customer customer) {
+
+        customerService.create(customer);
+
+        return "redirect:list";
     }
 
 
