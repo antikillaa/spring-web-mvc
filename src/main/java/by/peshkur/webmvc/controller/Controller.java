@@ -4,7 +4,6 @@ import by.peshkur.webmvc.entity.Customer;
 import by.peshkur.webmvc.response.ApiResponse;
 import by.peshkur.webmvc.service.CustomerService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,6 @@ public class Controller {
     Controller(CustomerService customerService) {
         this.customerService = customerService;
     }
-
 
     // inject via application.properties
     @Value("${welcome.message}")
@@ -58,6 +56,16 @@ public class Controller {
         customerService.create(customer);
 
         return new ApiResponse(ApiResponse.SUCCESS);
+    }
+
+    @GetMapping("/list")
+    public String draftUser(Model model) {
+        List<Customer> customers = customerService.getCustomers();
+
+            model.addAttribute("customers", customers);
+
+
+        return "view/list";
     }
 
 
